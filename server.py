@@ -77,7 +77,6 @@ class SIPRegisterHandler(socketserver.DatagramRequestHandler):
             else:
                     self.wfile.write(b"SIP/2.0 400 Bad Request\r\n")
                     print("El cliente nos manda " + "\n" + line)
-
         self.register2json()
 
 if __name__ == "__main__":

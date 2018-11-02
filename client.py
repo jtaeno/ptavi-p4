@@ -23,4 +23,5 @@ with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as my_socket:
         my_socket.send(bytes(ENVIAR,  'utf-8') + b'\r\n')
         data = my_socket.recv(1024)
         print('Recibido -- ', data.decode('utf-8'))
+        
 print("Socket terminado.")
