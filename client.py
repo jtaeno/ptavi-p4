@@ -1,26 +1,26 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-"""
-Programa cliente UDP que abre un socket a un servidor
-"""
-
+"""Programa cliente UDP que abre un socket a un servidor."""
 import socket
 import sys
 
-# Constantes. Dirección IP del servidor y contenido a enviar
-SERVER =  sys.argv[1]
-PORT = 6001
-LINE =  sys.argv[3:]
+try:
+    SERVER = sys.argv[1]
+    PORT = int(sys.argv[2])
+    METODO = sys.argv[3]
+    DIRECCION = sys.argv[4]
+    EXPIRES = sys.argv[5]
+except IndexError:
+    sys.exit("Usage: client.py ip puerto register sip_address expires_value")
 
-# Creamos el socket, lo configuramos y lo atamos a un servidor/puerto
-frase = ''
+ENVIAR = METODO.upper()+' sip:'+DIRECCION+' SIP/2.0 '+'EXPIRES: '+EXPIRES
+
 with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as my_socket:
-    my_socket.connect((SERVER, PORT))
-    for pal in LINE:
-        frase += pal + " " 
-    print("Enviando:", frase)
-    my_socket.send(bytes(frase, 'utf-8') + b'\r\n')
-    data = my_socket.recv(1024)
-    print('Recibido -- ', data.decode('utf-8'))
-
+        my_socket.connect((SERVER, PORT))
+        print('')
+        print(EXPIRES)
+        print("Enviando:", ENVIAR + '\n')
+        my_socket.send(bytes(ENVIAR,  'utf-8') + b'\r\n')
+        data = my_socket.recv(1024)
+        print('Recibido -- ', data.decode('utf-8'))
 print("Socket terminado.")
